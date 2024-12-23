@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Interview Preparation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interview Preparation Platform</h1>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌙</button>
+            </div>
+            <div class="level-selector">
+                <button class="level-btn active" data-level="Beginner">Beginner</button>
+                <button class="level-btn" data-level="Intermediate">Intermediate</button>
+                <button class="level-btn" data-level="Advance">Advance</button>
+            </div>
+        </header>
+
+        <main id="question-container">
+            <!-- Questions will be rendered here -->
+        </main>
+    </div>
+
+    <template id="questionTemplate">
+        <div class="question-card">
+            <div class="topic-tag"></div>
+            <h2 class="question-title"></h2>
+            <div class="answer-section"></div>
+            <div class="explanation-section"></div>
+            <div class="code-editor" style="display: none;">
+                <div class="editor-pane">
+                    <div class="editor-tabs">
+                        <button class="editor-tab active" data-tab="html">HTML</button>
+                        <button class="editor-tab" data-tab="css">CSS</button>
+                        <button class="editor-tab" data-tab="js">JS</button>
+                    </div>
+                    <div class="editor-content">
+                        <textarea class="code-textarea html-code" placeholder="Enter HTML code..."></textarea>
+                        <textarea class="code-textarea css-code" style="display: none;" placeholder="Enter CSS code..."></textarea>
+                        <textarea class="code-textarea js-code" style="display: none;" placeholder="Enter JavaScript code..."></textarea>
+                        <div class="editor-actions">
+                            <button class="run-btn">Run Code</button>
+                            <button class="reset-btn">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="preview-pane">
+                    <iframe class="preview-frame"></iframe>
+                </div>
+            </div>
+
+
+        </div>
+    </template>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
