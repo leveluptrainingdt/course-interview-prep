@@ -133,11 +133,16 @@ class CodeEditor {
 }
 
 // Question rendering with escaped HTML
+// Theme handling remains the same...
+
+// Question rendering with error handling
 function renderQuestion(question) {
+    if (!question) return;
+    
     const template = document.getElementById('questionTemplate');
     const clone = template.content.cloneNode(true);
     
-    clone.querySelector('.topic-tag').textContent = question.topic;
+    clone.querySelector('.topic-tag').textContent = question.topic || '';
     clone.querySelector('.question-title').textContent = `Q${question.id}: ${question.question}`;
     
     const answerSection = clone.querySelector('.answer-section');
@@ -147,21 +152,16 @@ function renderQuestion(question) {
     const formatCode = (text) => {
         if (!text) return "";
         
-        // First, escape any HTML characters in the entire text
         text = text.replace(/&/g, '&amp;')
                   .replace(/</g, '&lt;')
                   .replace(/>/g, '&gt;');
         
-        // Handle inline code (single backticks)
         text = text.replace(/`(.*?)`/g, (match, code) => {
             return `<code class="code-inline">${code}</code>`;
         });
         
-        // Handle code blocks (triple backticks)
         text = text.replace(/```(.*?)```/gs, (match, code) => {
-            // Remove first newline if it exists
             code = code.replace(/^\n/, '');
-            // Remove any common indentation
             const lines = code.split('\n');
             const indent = lines[0].match(/^\s*/)[0];
             code = lines.map(line => line.replace(new RegExp(`^${indent}`), '')).join('\n');
@@ -172,21 +172,15 @@ function renderQuestion(question) {
         return text;
     };
 
-    // Format and render the answer and explanation
     answerSection.innerHTML = `<strong>Answer:</strong> ${formatCode(question.answer)}`;
-    answerSection.style.display = 'block';
-
     explanationSection.innerHTML = `<strong>Explanation:</strong> ${formatCode(question.explanation)}`;
-    explanationSection.style.display = 'block';
 
-    // Initialize code editor if codeExample is present
     const card = clone.querySelector('.question-card');
     const codeEditorDiv = card.querySelector('.code-editor');
     
     if (question.codeExample && question.codeExample !== "None") {
         codeEditorDiv.style.display = 'grid';
         const codeEditor = new CodeEditor(card);
-        // Ensure code example is properly escaped for display
         const escapedExample = question.codeExample
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -196,22 +190,32 @@ function renderQuestion(question) {
     
     document.getElementById('question-container').appendChild(clone);
 }
-// Level selection
+
+// Level selection with error handling
 document.querySelectorAll('.level-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const level = btn.dataset.level;
         
-        // Clear current questions
-        document.getElementById('question-container').innerHTML = '';
+        const questionContainer = document.getElementById('question-container');
+        questionContainer.innerHTML = '';
         
-        // Render questions for selected level
+        if (!questions[level] || questions[level].length === 0) {
+            questionContainer.innerHTML = `
+                <div class="question-card">
+                    <p>No questions available for ${level} level yet.</p>
+                </div>`;
+            return;
+        }
+        
         questions[level].forEach(renderQuestion);
     });
 });
 
 // Initial render
 document.addEventListener('DOMContentLoaded', () => {
-    questions.Beginner.forEach(renderQuestion);
+    if (questions.Beginner && questions.Beginner.length > 0) {
+        questions.Beginner.forEach(renderQuestion);
+    }
 });

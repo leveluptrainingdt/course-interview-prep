@@ -329,5 +329,29 @@ Scalable Vector Graphics (SVG) are used for vector based graphics described in a
 SVG (Scalable Vector Graphics) is an XML-based vector graphics format used for displaying two-dimensional graphics on web pages and scale without losing quality
             `,
                 codeExample: ` <svg width=100 height=100> <circle  cx=50 cy=50  r=20 fill=red/></svg> `
-        }]}
+        }],    "Intermediate": [
+          {
+              id: 1,
+              question: "What does the HTML abbreviation stand for, and what is its purpose?",
+              answer: `
+  HTML stands for Hypertext Markup Language. Its purpose is to structure the content of web pages using a markup language, thereby defining how browsers display information, text, and various web elements.
+              `,
+              explanation: `
+  HTML is the backbone of web development, providing the structure needed for displaying text, links, images, and other multimedia elements on web pages.
+              `,
+              codeExample: "None"
+          },],   "Advance": [
+            {
+                id: 1,
+                question: "What does the HTML abbreviation stand for, and what is its purpose?",
+                answer: `
+    HTML stands for Hypertext Markup Language. Its purpose is to structure the content of web pages using a markup language, thereby defining how browsers display information, text, and various web elements.
+                `,
+                explanation: `
+    HTML is the backbone of web development, providing the structure needed for displaying text, links, images, and other multimedia elements on web pages.
+                `,
+                codeExample: "None"
+            },]
+      
+      }
          
