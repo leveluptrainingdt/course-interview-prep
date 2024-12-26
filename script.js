@@ -31,7 +31,6 @@ class CodeEditor {
             js: ''
         };
         
-        // Initialize the preview iframe
         this.initializePreview();
         this.setupEventListeners();
     }
@@ -39,7 +38,6 @@ class CodeEditor {
     initializePreview() {
         if (!this.preview) return;
         
-        // Create a new blank document in the iframe
         const previewDocument = this.preview.contentDocument;
         if (previewDocument) {
             previewDocument.open();
@@ -49,18 +47,13 @@ class CodeEditor {
     }
 
     setupEventListeners() {
-        // Tab switching
         this.tabs.forEach(tab => {
             tab.addEventListener('click', () => this.switchTab(tab.dataset.tab));
         });
 
-        // Run code button
         this.runBtn.addEventListener('click', () => this.runCode());
-
-        // Reset code
         this.resetBtn.addEventListener('click', () => this.resetCode());
         
-        // Restore live update functionality
         this.textareas.forEach(textarea => {
             textarea.addEventListener('input', () => this.runCode());
         });
@@ -78,17 +71,28 @@ class CodeEditor {
     }
 
     setInitialCode(html, css, js) {
-        this.initialCode = { html, css, js };
+        // Decode HTML entities to show actual code
+        const decodeHTML = (html) => {
+            const txt = document.createElement('textarea');
+            txt.innerHTML = html;
+            return txt.value;
+        };
+
+        this.initialCode = {
+            html: decodeHTML(html),
+            css: decodeHTML(css),
+            js: decodeHTML(js)
+        };
+
         const htmlTextarea = this.card.querySelector('.html-code');
         const cssTextarea = this.card.querySelector('.css-code');
         const jsTextarea = this.card.querySelector('.js-code');
 
-        if (htmlTextarea) htmlTextarea.value = html;
-        if (cssTextarea) cssTextarea.value = css;
-        if (jsTextarea) jsTextarea.value = js;
+        if (htmlTextarea) htmlTextarea.value = this.initialCode.html;
+        if (cssTextarea) cssTextarea.value = this.initialCode.css;
+        if (jsTextarea) jsTextarea.value = this.initialCode.js;
         
-        // Run code immediately after setting initial values
-        setTimeout(() => this.runCode(), 100); // Small delay to ensure iframe is ready
+        setTimeout(() => this.runCode(), 100);
     }
 
     runCode() {
@@ -110,7 +114,6 @@ class CodeEditor {
             </html>
         `;
 
-        // Update preview
         try {
             const previewDocument = this.preview.contentDocument;
             if (previewDocument) {
@@ -131,7 +134,6 @@ class CodeEditor {
         this.runCode();
     }
 }
-
 // Question rendering with escaped HTML
 // Theme handling remains the same...
 

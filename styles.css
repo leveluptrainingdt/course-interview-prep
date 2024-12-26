@@ -134,7 +134,7 @@ header {
 
 .code-textarea {
     width: 100%;
-    height: 300px;
+    height: 150px;
     padding: 1rem;
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.875rem;
@@ -277,6 +277,7 @@ pre code.code-block {
     background-color: #2d2d3f;
 }
 
+
 @media (max-width: 768px) {
     .code-editor {
         grid-template-columns: 1fr;
@@ -294,5 +295,13 @@ pre code.code-block {
     .question-title ,.answer-section ,.explanation-section{
         font-size: 14px;
 
+    }.code-textarea {
+        height: 150px;
+    }
+    .preview-frame {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: white;
     }
 }
